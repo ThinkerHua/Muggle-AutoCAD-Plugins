@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNet Plugins", "dotNet Plugins", "{47565B2A-E61B-467C-90E0-65321FE03319}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{52FA7302-081D-4934-BBAE-8763A9B50280}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lisp Plugins", "Lisp Plugins", "{15BAC459-868E-4C11-9246-DBEF9FCDB81F}"
+	ProjectSection(SolutionItems) = preProject
+		Lisp Plugins\Classic_Interface.lsp = Lisp Plugins\Classic_Interface.lsp
+		Lisp Plugins\Dim_Ordinate.lsp = Lisp Plugins\Dim_Ordinate.lsp
+		Lisp Plugins\Export_Text.lsp = Lisp Plugins\Export_Text.lsp
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DWGFilesMerger", "dotNet Plugins\DWGFilesMerger\DWGFilesMerger.csproj", "{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52FA7302-081D-4934-BBAE-8763A9B50280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52FA7302-081D-4934-BBAE-8763A9B50280}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52FA7302-081D-4934-BBAE-8763A9B50280}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52FA7302-081D-4934-BBAE-8763A9B50280}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5} = {47565B2A-E61B-467C-90E0-65321FE03319}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA1F1149-995F-486E-88A1-CE0DCF306CAA}
+	EndGlobalSection
+EndGlobal
