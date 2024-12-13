@@ -10,8 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lisp Plugins", "Lisp Plugins", "{15BAC459-868E-4C11-9246-DBEF9FCDB81F}"
 	ProjectSection(SolutionItems) = preProject
 		Lisp Plugins\Classic_Interface.lsp = Lisp Plugins\Classic_Interface.lsp
-		Lisp Plugins\Dim_Ordinate.lsp = Lisp Plugins\Dim_Ordinate.lsp
 		Lisp Plugins\Export_Text.lsp = Lisp Plugins\Export_Text.lsp
+		Lisp Plugins\CoordinateDimension.lsp = Lisp Plugins\CoordinateDimension.lsp
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DWGFilesMerger", "dotNet Plugins\DWGFilesMerger\DWGFilesMerger.csproj", "{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}"
