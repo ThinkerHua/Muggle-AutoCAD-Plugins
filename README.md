@@ -11,7 +11,7 @@
 
 同类免费软件 [DrawingCombiner](http://www.yiyunsoftware.com/docs/#/co-start) 存在重叠问题，其实只要改变排列基点即可解决。但该软件并不开源没法修改，所以重新开发了此项目。
 
-## Dim_Ordinate (Lisp)
+## CoordinateDimension (Lisp)
 
 - 命令：ZB
 - 功能：坐标标注

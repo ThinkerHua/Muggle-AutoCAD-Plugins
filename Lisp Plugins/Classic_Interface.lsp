@@ -1,25 +1,39 @@
-;¹Ø±ÕÃüÁîĞĞ»ØÏÔ
+ï»¿;;==============================================================================
+;;  Muggle AutoCAD-Plugins - tools and plugins for AutoCAD
+;;
+;;  Copyright Â© 2024 Huang YongXing. 
+;;
+;;  This library is free software, licensed under the terms of the GNU 
+;;  General Public License as published by the Free Software Foundation, 
+;;  either version 3 of the License, or (at your option) any later version. 
+;;  You should have received a copy of the GNU General Public License 
+;;  along with this program. If not, see <http://www.gnu.org/licenses/>. 
+;;==============================================================================
+;;  Classic_Interface.cs: enable the classic interface and something preference
+;;  written by Huang YongXing - thinkerhua@hotmail.com
+;;==============================================================================
+;å…³é—­å‘½ä»¤è¡Œå›æ˜¾
 (setvar "CMDECHO" 0)
-;¿ªÊ¼Ñ¡Ïî¿¨
+;å¼€å§‹é€‰é¡¹å¡
 (setvar "startmode" 1)
-;Æô¶¯Ê±²»ĞÂ½¨¿Õ°×Í¼ĞÎ
+;å¯åŠ¨æ—¶ä¸æ–°å»ºç©ºç™½å›¾å½¢
 (setvar "startup" 3)
-;¹Ø±ÕRIBBON½çÃæ
+;å…³é—­RIBBONç•Œé¢
 (command "ribbonclose")
-;ÏÔÊ¾²Ëµ¥À¸
+;æ˜¾ç¤ºèœå•æ 
 (setvar "MENUBAR" 1)
-;´ò¿ª¹¤¾ßÀ¸
-(command "toolbar" "±ê×¼" "Show")
-(command "toolbar" "ÑùÊ½" "Show")
-(command "toolbar" "¹¤×÷¿Õ¼ä" "Show")
-(command "toolbar" "Í¼²ã" "Show")
-(command "toolbar" "ÌØĞÔ" "Show")
-(command "toolbar" "»æÍ¼" "Show")
-(command "toolbar" "ĞŞ¸Ä" "Show")
-(command "toolbar" "»æÍ¼´ÎĞò" "Show")
-(command "workspace" "sa" "AutoCAD¾­µä")
-;¹Ø±Õµ¼º½¸¡¶¯¹¤¾ßÀ¸
+;æ‰“å¼€å·¥å…·æ 
+(command "toolbar" "æ ‡å‡†" "Show")
+(command "toolbar" "æ ·å¼" "Show")
+(command "toolbar" "å·¥ä½œç©ºé—´" "Show")
+(command "toolbar" "å›¾å±‚" "Show")
+(command "toolbar" "ç‰¹æ€§" "Show")
+(command "toolbar" "ç»˜å›¾" "Show")
+(command "toolbar" "ä¿®æ”¹" "Show")
+(command "toolbar" "ç»˜å›¾æ¬¡åº" "Show")
+(command "workspace" "sa" "AutoCADç»å…¸")
+;å…³é—­å¯¼èˆªæµ®åŠ¨å·¥å…·æ 
 (setvar "NAVBARDISPLAY" 0)
-;»Ö¸´ÃüÁîĞĞ»ØÏÔ
+;æ¢å¤å‘½ä»¤è¡Œå›æ˜¾
 (setvar "CMDECHO" 1)
 (princ)
