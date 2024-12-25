@@ -1,13 +1,24 @@
-﻿using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.MacroRecorder;
-using System;
-using System.Collections;
+﻿/*==============================================================================
+ *  Muggle AutoCAD-Plugins - tools and plugins for AutoCAD
+ *
+ *  Copyright © 2024 Huang YongXing. 
+ *
+ *  This library is free software, licensed under the terms of the GNU 
+ *  General Public License as published by the Free Software Foundation, 
+ *  either version 3 of the License, or (at your option) any later version. 
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>. 
+ *==============================================================================
+ *  Entities.cs: class of the collection of entity, with some useful methods 
+ *  written by Huang YongXing - thinkerhua@hotmail.com
+ *==============================================================================*/
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Autodesk.AutoCAD.DatabaseServices;
 
 namespace Muggle.AutoCADPlugins.Common.Database {
+    /// <summary>
+    /// 实体集合类型。
+    /// </summary>
     public class Entities : List<Entity> {
         #region Methods
         /// <summary>

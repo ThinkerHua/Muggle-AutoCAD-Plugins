@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("DWGFilesMerger")]
+[assembly: AssemblyTitle("TableToExcel")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DWGFilesMerger")]
+[assembly: AssemblyProduct("TableToExcel")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("1a14bb2a-7b74-4e36-b5ca-6a9c95ea98f5")]
+[assembly: Guid("bbf54abd-04cd-427e-9133-3d5e23d22abe")]
 
 // 程序集的版本信息由下列四个值组成: 
 //

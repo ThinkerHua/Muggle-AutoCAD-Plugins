@@ -10,11 +10,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lisp Plugins", "Lisp Plugins", "{15BAC459-868E-4C11-9246-DBEF9FCDB81F}"
 	ProjectSection(SolutionItems) = preProject
 		Lisp Plugins\Classic_Interface.lsp = Lisp Plugins\Classic_Interface.lsp
-		Lisp Plugins\Dim_Ordinate.lsp = Lisp Plugins\Dim_Ordinate.lsp
+		Lisp Plugins\CoordinateDimension.lsp = Lisp Plugins\CoordinateDimension.lsp
 		Lisp Plugins\Export_Text.lsp = Lisp Plugins\Export_Text.lsp
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DWGFilesMerger", "dotNet Plugins\DWGFilesMerger\DWGFilesMerger.csproj", "{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableToExcel", "dotNet Plugins\ExportTableToExcel\ExportTableToExcel.csproj", "{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,12 +32,17 @@ Global
 		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5} = {47565B2A-E61B-467C-90E0-65321FE03319}
+		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE} = {47565B2A-E61B-467C-90E0-65321FE03319}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA1F1149-995F-486E-88A1-CE0DCF306CAA}

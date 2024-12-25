@@ -1,8 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*==============================================================================
+ *  Muggle AutoCAD-Plugins - tools and plugins for AutoCAD
+ *
+ *  Copyright © 2024 Huang YongXing. 
+ *
+ *  This library is free software, licensed under the terms of the GNU 
+ *  General Public License as published by the Free Software Foundation, 
+ *  either version 3 of the License, or (at your option) any later version. 
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>. 
+ *==============================================================================
+ *  Vector2dExtension.cs: extension for Autodesk.AutoCAD.Geometry.Vector2d
+ *  written by Huang YongXing - thinkerhua@hotmail.com
+ *==============================================================================*/
 using Autodesk.AutoCAD.Geometry;
 
 namespace Muggle.AutoCADPlugins.Common.Geometry {
