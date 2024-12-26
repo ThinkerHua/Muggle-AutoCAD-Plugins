@@ -51,13 +51,14 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
         /// 将当前表格导出到指定文件。
         /// </summary>
         /// <param name="filePath">文件完整路径</param>
+        /// <param name="mergeCells">是否合并单元格</param>
         /// <exception cref="ArgumentException">
         /// <see cref="BorderHorizontal"/> 或 <see cref="BorderVertical"/> 为空集合。
         /// </exception>
         /// <exception cref="Exception">
         /// 未在本机上查找到“Excel”应用程序，或打开“Excel”应用程序失败。
         /// </exception>
-        public void ExprotToExcel(string filePath) {
+        public void ExprotToExcel(string filePath, bool mergeCells) {
             if (string.IsNullOrEmpty(filePath)) {
                 throw new ArgumentException($"“{nameof(filePath)}”不能为 null 或空。", nameof(filePath));
             }
@@ -140,132 +141,144 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
             if (xlSheet == null) {
                 xlSheet = xlBook.Sheets.Add(After: xlBook.Sheets[xlBook.Sheets.Count]);
             }
+
+            xlSheet.Cells.NumberFormat = "@";//单元格格式设置为文本，防止某些数据变成日期
             #endregion
 
-            //行降序排列，列升序排列
-            var orderedHOR = BorderHorizontal.OrderByDescending(item => item.Key).ToArray();
-            var orderedVER = BorderVertical.OrderBy(item => item.Key).ToArray();
-            var orderedTXT = Texts.OrderBy(item => item.X).ThenByDescending(item => item.Y).ToArray();
+            try {
+                //行降序排列，列升序排列
+                var orderedHOR = BorderHorizontal.OrderByDescending(item => item.Key).ToArray();
+                var orderedVER = BorderVertical.OrderBy(item => item.Key).ToArray();
+                var orderedTXT = Texts.OrderBy(item => item.X).ThenByDescending(item => item.Y).ToArray();
 
-            Range range, cell;
-            //输出文字
-            foreach (var (X, Y, Text) in orderedTXT) {
-                var row = Array.FindIndex(orderedHOR, item => item.Key < Y);
-                if (row <= 0) continue;//超出表格范围
-                var col = Array.FindIndex(orderedVER, item => item.Key > X);
-                if (col <= 0) continue;//超出表格范围
+                Range range, cell;
+                //输出文字
+                foreach (var (X, Y, Text) in orderedTXT) {
+                    var row = Array.FindIndex(orderedHOR, item => item.Key < Y);
+                    if (row <= 0) continue;//超出表格范围
+                    var col = Array.FindIndex(orderedVER, item => item.Key > X);
+                    if (col <= 0) continue;//超出表格范围
 
-                cell = xlSheet.Cells[row, col] as Range;
-                cell.Formula += Text;
-            }
-
-            //设置横边框
-            for (int i = 0; i < orderedHOR.Length; i++) {
-                var row = i + 1;
-                foreach (var (X1, X2) in orderedHOR[i].Value) {
-                    var minX = X1 < X2 ? X1 : X2;
-                    var maxX = X1 < X2 ? X2 : X1;
-                    var col1 = Array.FindIndex(orderedVER, item => item.Key > minX);
-                    if (col1 <= 0) continue;
-                    var col2 = Array.FindIndex(orderedVER, item => item.Key >= maxX);
-                    if (col2 <= 0) col2 = orderedVER.Length - 1;
-
-                    var cell1 = xlSheet.Cells[row, col1] as Range;
-                    var cell2 = xlSheet.Cells[row, col2] as Range;
-                    range = xlSheet.Range[cell1.Address, cell2.Address];
-
-                    var borderEdgeTop = range.Borders[XlBordersIndex.xlEdgeTop];
-                    borderEdgeTop.LineStyle = XlLineStyle.xlContinuous;
-                    borderEdgeTop.Weight = XlBorderWeight.xlThin;
+                    cell = xlSheet.Cells[row, col] as Range;
+                    cell.Formula += Text;
                 }
-            }
 
-            //设置竖边框
-            for (int i = 0; i < orderedVER.Length; i++) {
-                var col = i + 1;
-                foreach (var (Y1, Y2) in orderedVER[i].Value) {
-                    var minY = Y1 < Y2 ? Y1 : Y2;
-                    var maxY = Y1 < Y2 ? Y2 : Y1;
-                    var row1 = Array.FindIndex(orderedHOR, item => item.Key < maxY);
-                    if (row1 <= 0) continue;
-                    var row2 = Array.FindIndex(orderedHOR, item => item.Key <= minY);
-                    if (row2 <= 0) row2 = orderedHOR.Length - 1;
+                //设置横边框
+                for (int i = 0; i < orderedHOR.Length; i++) {
+                    var row = i + 1;
+                    foreach (var (X1, X2) in orderedHOR[i].Value) {
+                        var minX = X1 < X2 ? X1 : X2;
+                        var maxX = X1 < X2 ? X2 : X1;
+                        var col1 = Array.FindIndex(orderedVER, item => item.Key > minX);
+                        if (col1 <= 0) continue;
+                        var col2 = Array.FindIndex(orderedVER, item => item.Key >= maxX);
+                        if (col2 <= 0) col2 = orderedVER.Length - 1;
 
-                    var cell1 = xlSheet.Cells[row1, col] as Range;
-                    var cell2 = xlSheet.Cells[row2, col] as Range;
-                    range = xlSheet.Range[cell1.Address, cell2.Address];
+                        var cell1 = xlSheet.Cells[row, col1] as Range;
+                        var cell2 = xlSheet.Cells[row, col2] as Range;
+                        range = xlSheet.Range[cell1.Address, cell2.Address];
 
-                    var borderEdgeLeft = range.Borders[XlBordersIndex.xlEdgeLeft];
-                    borderEdgeLeft.LineStyle = XlLineStyle.xlContinuous;
-                    borderEdgeLeft.Weight = XlBorderWeight.xlThin;
+                        var borderEdgeTop = range.Borders[XlBordersIndex.xlEdgeTop];
+                        borderEdgeTop.LineStyle = XlLineStyle.xlContinuous;
+                        borderEdgeTop.Weight = XlBorderWeight.xlThin;
+                    }
                 }
-            }
 
-            //合并单元格
-            //=====这段代码取得的表格范围不正确=====
-            //range = xlSheet.UsedRange;
-            //var (minRow, minCol, maxRow, maxCol) = range.GetMostRCNum();
-            //======================================
-            var minRow = 1;
-            var minCol = 1;
-            var maxRow = orderedHOR.Length - 1;
-            var maxCol = orderedVER.Length - 1;
-            for (var row = minRow; row <= maxRow; row++) {
-                for (var col = minCol + 1; col <= maxCol; col++) {
-                    cell = xlSheet.Cells[row, col];
-                    if ((XlLineStyle) cell.Borders[XlBordersIndex.xlEdgeLeft].LineStyle != XlLineStyle.xlLineStyleNone)
-                        continue;
+                //设置竖边框
+                for (int i = 0; i < orderedVER.Length; i++) {
+                    var col = i + 1;
+                    foreach (var (Y1, Y2) in orderedVER[i].Value) {
+                        var minY = Y1 < Y2 ? Y1 : Y2;
+                        var maxY = Y1 < Y2 ? Y2 : Y1;
+                        var row1 = Array.FindIndex(orderedHOR, item => item.Key < maxY);
+                        if (row1 <= 0) continue;
+                        var row2 = Array.FindIndex(orderedHOR, item => item.Key <= minY);
+                        if (row2 <= 0) row2 = orderedHOR.Length - 1;
 
-                    int col2;
-                    for (col2 = col + 1; col2 <= maxCol; ++col2) {
-                        cell = xlSheet.Cells[row, col2];
+                        var cell1 = xlSheet.Cells[row1, col] as Range;
+                        var cell2 = xlSheet.Cells[row2, col] as Range;
+                        range = xlSheet.Range[cell1.Address, cell2.Address];
+
+                        var borderEdgeLeft = range.Borders[XlBordersIndex.xlEdgeLeft];
+                        borderEdgeLeft.LineStyle = XlLineStyle.xlContinuous;
+                        borderEdgeLeft.Weight = XlBorderWeight.xlThin;
+                    }
+                }
+
+                //合并单元格
+                //=====这段代码取得的表格范围不正确=====
+                //range = xlSheet.UsedRange;
+                //var (minRow, minCol, maxRow, maxCol) = range.GetMostRCNum();
+                //======================================
+                if (!mergeCells) goto SkipMergeCells;
+
+                var minRow = 1;
+                var minCol = 1;
+                var maxRow = orderedHOR.Length - 1;
+                var maxCol = orderedVER.Length - 1;
+                for (var row = minRow; row <= maxRow; row++) {
+                    for (var col = minCol + 1; col <= maxCol; col++) {
+                        cell = xlSheet.Cells[row, col];
                         if ((XlLineStyle) cell.Borders[XlBordersIndex.xlEdgeLeft].LineStyle != XlLineStyle.xlLineStyleNone)
-                            break;
+                            continue;
+
+                        int col2;
+                        for (col2 = col + 1; col2 <= maxCol; ++col2) {
+                            cell = xlSheet.Cells[row, col2];
+                            if ((XlLineStyle) cell.Borders[XlBordersIndex.xlEdgeLeft].LineStyle != XlLineStyle.xlLineStyleNone)
+                                break;
+                        }
+
+                        range = xlSheet.Range[((Range) xlSheet.Cells[row, col - 1]).Address, ((Range) xlSheet.Cells[row, col2 - 1]).Address];
+                        range.Select();
+                        range = xlApp.Selection;
+                        ExcelOperation.MergeKeepContent(range);
+
+                        col = col2;
                     }
-
-                    range = xlSheet.Range[((Range) xlSheet.Cells[row, col - 1]).Address, ((Range) xlSheet.Cells[row, col2 - 1]).Address];
-                    range.Select();
-                    range = xlApp.Selection;
-                    ExcelOperation.MergeKeepContent(range);
-
-                    col = col2;
                 }
-            }
 
-            for (var col = minCol; col <= maxCol; col++) {
-                for (var row = minRow + 1; row <= maxRow; row++) {
-                    cell = xlSheet.Cells[row, col];
+                for (var col = minCol; col <= maxCol; col++) {
+                    for (var row = minRow + 1; row <= maxRow; row++) {
+                        cell = xlSheet.Cells[row, col];
 
-                    if ((XlLineStyle) cell.Borders[XlBordersIndex.xlEdgeTop].LineStyle != XlLineStyle.xlLineStyleNone)
-                        continue;
-
-                    int row2;
-                    for (row2 = row + 1; row2 <= maxRow; row2++) {
-                        cell = xlSheet.Cells[row2, col];
                         if ((XlLineStyle) cell.Borders[XlBordersIndex.xlEdgeTop].LineStyle != XlLineStyle.xlLineStyleNone)
-                            break;
+                            continue;
+
+                        int row2;
+                        for (row2 = row + 1; row2 <= maxRow; row2++) {
+                            cell = xlSheet.Cells[row2, col];
+                            if ((XlLineStyle) cell.Borders[XlBordersIndex.xlEdgeTop].LineStyle != XlLineStyle.xlLineStyleNone)
+                                break;
+                        }
+
+                        range = xlSheet.Range[((Range) xlSheet.Cells[row - 1, col]).Address, ((Range) xlSheet.Cells[row2 - 1, col]).Address];
+                        range.Select();
+                        range = xlApp.Selection;
+                        ExcelOperation.MergeKeepContent(range);
+
+                        row = row2;
                     }
-
-                    range = xlSheet.Range[((Range) xlSheet.Cells[row - 1, col]).Address, ((Range) xlSheet.Cells[row2 - 1, col]).Address];
-                    range.Select();
-                    range = xlApp.Selection;
-                    ExcelOperation.MergeKeepContent(range);
-
-                    row = row2;
                 }
-            }
 
-            //是新工作薄则保存关闭，否则不处理
-            if (newBook) {
-                xlBook.SaveAs(filePath, FileFormat: XlFileFormat.xlExcel8);
-                xlBook.Close();
-            }
+            SkipMergeCells:;
 
-            xlApp.DisplayAlerts = true;
-            xlApp.ScreenUpdating = true;
-            //是新开程序则退出，否则不处理
-            if (newApp) {
-                xlApp.Quit();
+            } catch (Exception) {
+
+                throw;
+            } finally {
+                //是新工作薄则保存关闭，否则不处理
+                if (newBook) {
+                    xlBook.SaveAs(filePath, FileFormat: XlFileFormat.xlExcel8);
+                    xlBook.Close();
+                }
+
+                xlApp.DisplayAlerts = true;
+                xlApp.ScreenUpdating = true;
+                //是新开程序则退出，否则不处理
+                if (newApp) {
+                    xlApp.Quit();
+                }
             }
         }
 

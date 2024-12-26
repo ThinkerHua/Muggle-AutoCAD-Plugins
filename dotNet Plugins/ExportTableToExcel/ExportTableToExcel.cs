@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
@@ -39,8 +40,10 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
         private static SaveFileDialog saveFileDialog;
         private static string folder = defaultFolder, name = defaultName;
         private double Epsilion = 0.000001;
+        private bool MergeCells = false;
         private string FileFullName => $"{folder}\\{name}";
-        private string StartingMessage => $"\n当前参数：容许误差 = {Epsilion}，导出文件路径 = {FileFullName}";
+        private string StartingMessage => string.Format("\n当前参数：容许误差 = {0}，合并单元格 = {1}，导出文件路径 = {2}",
+            Epsilion, MergeCells ? "是" : "否", FileFullName);
 
         [CommandMethod("ExprotTableToExcel", CommandFlags.UsePickSet)]
         [CommandMethod("ETTE", CommandFlags.UsePickSet)]
@@ -64,6 +67,7 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
             };
             pmptKeywords.Keywords.Add("S", "S", "选择表格(S)", true, true);
             pmptKeywords.Keywords.Add("E", "E", "容许误差(E)", true, true);
+            pmptKeywords.Keywords.Add("M", "M", "合并单元格(M)", true, true);
             pmptKeywords.Keywords.Add("F", "F", "设置导出文件(F)", true, true);
             pmptKeywords.Keywords.Default = "S";
 
@@ -78,6 +82,10 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
                     break;
                 case "E":
                     Epsilion = GetEpsilion(editor);
+                    editor.WriteMessage(StartingMessage);
+                    break;
+                case "M":
+                    MergeCells = GetMergeCells(editor);
                     editor.WriteMessage(StartingMessage);
                     break;
                 case "F":
@@ -117,7 +125,7 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
             if (table == null) goto No_Valid_Entities;
 
             try {
-                table.ExprotToExcel($"{FileFullName}");
+                table.ExprotToExcel($"{FileFullName}", MergeCells);
                 WinForm.MessageBox.Show(
                     $"成功导出到：{FileFullName}",
                     "成功",
@@ -143,8 +151,8 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
         }
 
         private double GetEpsilion(Editor editor) {
-            var msg = $"\n输入容许误差（小于此数值的差异，将斜线视为水平或垂直）";
-            var pmpt = new PromptDoubleOptions(msg) {
+            var pmpt = new PromptDoubleOptions(string.Empty) {
+                Message = $"\n输入容许误差（小于此数值的差异，将斜线视为水平或垂直）",
                 AllowNone = true,
             };
 
@@ -153,6 +161,26 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
                 return resault.Value;
 
             return Epsilion;
+        }
+
+        private bool GetMergeCells(Editor editor) {
+            var pmpt = new PromptKeywordOptions(string.Empty) {
+                Message = $"\n是否合并单元格：",
+                AllowNone = true,
+            };
+            pmpt.Keywords.Add("Y", "Y", "是(Y)", true, true);
+            pmpt.Keywords.Add("N", "N", "否(N)", true, true);
+            pmpt.Keywords.Default = MergeCells ? "Y" : "N";
+
+            var resault = editor.GetKeywords(pmpt);
+            switch (resault.StringResult) {
+            case "Y":
+                return true;
+            case "N":
+                return false;
+            default:
+                return MergeCells;
+            }
         }
 
         private PromptSelectionResult SelectTable(Editor editor) {
@@ -168,6 +196,7 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
             var sFilter = new SelectionFilter(typedValues);
             return editor.GetSelection(sFilter);
         }
+
         private void ChooseFileFullname() {
             if (saveFileDialog is null)
                 saveFileDialog = new SaveFileDialog(title, name, extension, dialogName, flags);
