@@ -38,8 +38,9 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
             SaveFileDialog.SaveFileDialogFlags.NoFtpSites;
         private static SaveFileDialog saveFileDialog;
         private static string folder = defaultFolder, name = defaultName;
+        private double Epsilion = 0.000001;
         private string FileFullName => $"{folder}\\{name}";
-        private string StartingMessage => $"\n当前参数：导出文件路径 = {FileFullName}";
+        private string StartingMessage => $"\n当前参数：容许误差 = {Epsilion}，导出文件路径 = {FileFullName}";
 
         [CommandMethod("ExprotTableToExcel", CommandFlags.UsePickSet)]
         [CommandMethod("ETTE", CommandFlags.UsePickSet)]
@@ -62,6 +63,7 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
                 AllowNone = true,
             };
             pmptKeywords.Keywords.Add("S", "S", "选择表格(S)", true, true);
+            pmptKeywords.Keywords.Add("E", "E", "容许误差(E)", true, true);
             pmptKeywords.Keywords.Add("F", "F", "设置导出文件(F)", true, true);
             pmptKeywords.Keywords.Default = "S";
 
@@ -73,6 +75,10 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
                 case "S":
                     loop = false;
                     selectionSetResult = SelectTable(editor);
+                    break;
+                case "E":
+                    Epsilion = GetEpsilion(editor);
+                    editor.WriteMessage(StartingMessage);
                     break;
                 case "F":
                     ChooseFileFullname();
@@ -101,6 +107,8 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
             }
             /*foreach (var ent in entities) {
                 editor.WriteMessage($"\nID: {ent.ObjectId} {ent.GetType().Name} Extents: {ent.GeometricExtents}");
+                if (ent is Line line)
+                    editor.WriteMessage($"\nStartPoint: {line.StartPoint}, EndPoint: {line.EndPoint}");
             }*/
 
             if (entities.Count == 0) goto No_Valid_Entities;
@@ -132,6 +140,19 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
                 WinForm.MessageBoxButtons.OK,
                 WinForm.MessageBoxIcon.Error);
             return;
+        }
+
+        private double GetEpsilion(Editor editor) {
+            var msg = $"\n输入容许误差（小于此数值的差异，将斜线视为水平或垂直）";
+            var pmpt = new PromptDoubleOptions(msg) {
+                AllowNone = true,
+            };
+
+            var resault = editor.GetDouble(pmpt);
+            if (resault.Status == PromptStatus.OK)
+                return resault.Value;
+
+            return Epsilion;
         }
 
         private PromptSelectionResult SelectTable(Editor editor) {
@@ -175,7 +196,7 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
             var table = new ExchangeTable();
             foreach (var line in lines) {
                 if (line.Length == 0.0) continue;
-                if (line.StartPoint.X == line.EndPoint.X) {
+                if (Math.Abs(line.StartPoint.X - line.EndPoint.X) <= Epsilion) {
                     if (table.BorderVertical.ContainsKey(line.StartPoint.X)) {
                         table.BorderVertical[line.StartPoint.X].Add((line.StartPoint.Y, line.EndPoint.Y));
                     } else {
@@ -183,7 +204,7 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
                             line.StartPoint.X,
                             new List<(double Y1, double Y2)> { (line.StartPoint.Y, line.EndPoint.Y) });
                     }
-                } else if (line.StartPoint.Y == line.EndPoint.Y) {
+                } else if (Math.Abs(line.StartPoint.Y - line.EndPoint.Y) <= Epsilion) {
                     if (table.BorderHorizontal.ContainsKey(line.StartPoint.Y)) {
                         table.BorderHorizontal[line.StartPoint.Y].Add((line.StartPoint.X, line.EndPoint.X));
                     } else {
