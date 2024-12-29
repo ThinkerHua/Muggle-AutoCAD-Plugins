@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("DWGFilesMerger")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Merge *.dwg files")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DWGFilesMerger")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyProduct("Muggle AutoCAD-Plugins")]
+[assembly: AssemblyCopyright("Copyright ©  2024 Huang YongXing")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

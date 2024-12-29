@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Common")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("The commonly assembly for Muggle AutoCAD-Plugins")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Common")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyProduct("Muggle AutoCAD-Plugins")]
+[assembly: AssemblyCopyright("Copyright ©  2024 Huang YongXing")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

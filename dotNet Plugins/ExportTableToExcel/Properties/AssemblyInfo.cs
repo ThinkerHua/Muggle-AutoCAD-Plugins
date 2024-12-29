@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("TableToExcel")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ExportTableToExcel")]
+[assembly: AssemblyDescription("Export table to excel")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TableToExcel")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyProduct("Muggle AutoCAD-Plugins")]
+[assembly: AssemblyCopyright("Copyright ©  2024 Huang YongXing")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

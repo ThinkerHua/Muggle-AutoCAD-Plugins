@@ -4,7 +4,7 @@
 
 基于AutoCAD 2021版本开发，其他版本未经测试。
 
-## DWG Files Merger (.Net)
+## DWGFilesMerger (.Net)
 
 - 命令：MergeDWGFiles
 - 功能：批量合并 *.dwg 文件
@@ -20,7 +20,7 @@
 - 命令：ETTE 或 ExprotTableToExcel
 - 功能：将 CAD 中的假表格导出到 Excel（假表格指用线条和文字制作的表格），对块或属性块也有效。
 
-[CAD快速看图](https://cad.glodon.com/) 带有此功能，且速度很快，但如果是很大的表格，会提示内容太多不工作，于是开发此插件。
+[CAD快速看图](https://cad.glodon.com/) 带有此功能，且速度很快，但如果是很大的表格，会弹窗提示内容太多不工作，于是开发此插件。
 
 本插件虽效率不及“CAD快速看图”，但无论表格内容多少均可使用。“CAD快速看图”应该是直接对 *.xls 文件进行读写的，所以比较快；本插件通过微软公开的 API 与 Excel 进行交互，效率较慢。
 
