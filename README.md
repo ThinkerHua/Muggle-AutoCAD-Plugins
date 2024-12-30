@@ -9,7 +9,7 @@
 - 命令：MergeDWGFiles
 - 功能：批量合并 *.dwg 文件
 
-同类免费软件 [DrawingCombiner](http://www.yiyunsoftware.com/docs/#/co-start) 存在重叠问题，其实只要改变排列基点即可解决。但该软件并不开源没法修改，所以重新开发了此插件。
+同类免费软件 [DrawingCombiner](http://www.yiyunsoftware.com/docs/#/co-start) 存在重叠问题，其实只要改变排列基点即可解决；且同名但实际内容不同的块会全部变成相同的块。但该软件并不开源没法修改，所以重新开发了此插件。
 
 “DrawingCombiner”执行效率较慢，每个文件都实际打开并在 AutoCAD 窗口里呈现出来；本插件相对较快一些，文件只在后台读取处理。
 

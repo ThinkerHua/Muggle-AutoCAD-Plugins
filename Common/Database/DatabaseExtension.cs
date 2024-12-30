@@ -45,6 +45,31 @@ namespace Muggle.AutoCADPlugins.Common.Database {
 
             return entities;
         }
+
+        /// <summary>
+        /// 获取当前数据库的模型空间中所有实体的ID。
+        /// </summary>
+        /// <param name="db">当前数据库</param>
+        /// <returns>当前数据库的模型空间中所有实体的ID。
+        /// 若无有效实体，则集合 Count 属性等于 0。</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static ObjectIdCollection GetModelSpaceEntityIdCollection(this Autodesk.AutoCAD.DatabaseServices.Database db) {
+            if (db is null) {
+                throw new ArgumentNullException(nameof(db));
+            }
+
+            var idCollection = new ObjectIdCollection();
+            using (var trans = db.TransactionManager.StartTransaction()) {
+                var blockTable = trans.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+                var modelSpace = trans.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForRead) as BlockTableRecord;
+                foreach (var objectId in modelSpace) {
+                    idCollection.Add(objectId);
+                }
+            }
+
+            return idCollection;
+        }
+
         /// <summary>
         /// 获取当前数据库中指定块参照内包含的所有实际显示的实体。
         /// </summary>
@@ -97,6 +122,7 @@ namespace Muggle.AutoCADPlugins.Common.Database {
 
             return entities;
         }
+
         /// <summary>
         /// 获取当前数据库中给定 <see cref="Polyline"/> 对象集合中各对象分解后的
         /// <see cref="Line"/> 对象集合。
