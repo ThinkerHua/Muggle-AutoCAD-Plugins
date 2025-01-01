@@ -155,9 +155,9 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
                 AllowNone = true,
             };
 
-            var resault = editor.GetDouble(pmpt);
-            if (resault.Status == PromptStatus.OK)
-                return resault.Value;
+            var result = editor.GetDouble(pmpt);
+            if (result.Status == PromptStatus.OK)
+                return result.Value;
 
             return Epsilion;
         }
@@ -171,8 +171,8 @@ namespace Muggle.AutoCADPlugins.ExportTableToExcel {
             pmpt.Keywords.Add("N", "N", "否(N)", true, true);
             pmpt.Keywords.Default = MergeCells ? "Y" : "N";
 
-            var resault = editor.GetKeywords(pmpt);
-            switch (resault.StringResult) {
+            var result = editor.GetKeywords(pmpt);
+            switch (result.StringResult) {
             case "Y":
                 return true;
             case "N":

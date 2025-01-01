@@ -207,15 +207,15 @@ namespace Muggle.AutoCADPlugins.Common.Database {
                 throw new ArgumentException($"“{nameof(extsCollection2)}”不应为空集合。", nameof(extsCollection2));
             }
 
-            var resault = new List<Extents2d>();
+            var result = new List<Extents2d>();
             foreach (var exts1 in extsCollection1) {
                 foreach (var exts2 in extsCollection2) {
                     var intersection = exts1.Intersect(exts2);
-                    if (intersection.IsValid(false)) resault.Add(intersection);
+                    if (intersection.IsValid(false)) result.Add(intersection);
                 }
             }
 
-            return resault;
+            return result;
         }
 
         /// <summary>
@@ -250,12 +250,12 @@ namespace Muggle.AutoCADPlugins.Common.Database {
             }
 
             var tmp = new List<Extents2d>();
-            var resault = new List<Extents2d>(extsCollection1);
+            var result = new List<Extents2d>(extsCollection1);
             var toler = new Tolerance(0, 0);
             bool stillHasIntersection;
             do {
                 stillHasIntersection = false;
-                foreach (var exts1 in resault) {
+                foreach (var exts1 in result) {
                     foreach (var exts2 in extsCollection2) {
                         var difference = exts1.Subtract(exts2);
                         if (difference.Count() == 0 || !exts1.IsEqualTo(difference.First(), toler))
@@ -265,11 +265,11 @@ namespace Muggle.AutoCADPlugins.Common.Database {
                     }
                 }
 
-                resault = tmp;
+                result = tmp;
                 tmp = new List<Extents2d>();
             } while (stillHasIntersection);
 
-            return resault;
+            return result;
         }
 
         /// <summary>
@@ -304,21 +304,21 @@ namespace Muggle.AutoCADPlugins.Common.Database {
                 throw new ArgumentException($"“{nameof(extsCollection2)}”不应为空集合。", nameof(extsCollection2));
             }
 
-            var resault = new List<Extents2d>();
+            var result = new List<Extents2d>();
             var tmp = new List<Extents2d>(extsCollection2);
             foreach (var exts1 in extsCollection1) {
                 foreach (var exts in tmp) {
-                    resault.AddRange(exts.Subtract(exts1));
+                    result.AddRange(exts.Subtract(exts1));
                 }
 
-                tmp = resault;
-                resault = new List<Extents2d>();
+                tmp = result;
+                result = new List<Extents2d>();
             }
 
-            resault.AddRange(extsCollection1);
-            resault.AddRange(tmp);
+            result.AddRange(extsCollection1);
+            result.AddRange(tmp);
 
-            return resault;
+            return result;
         }
     }
 }

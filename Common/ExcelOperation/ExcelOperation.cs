@@ -83,14 +83,14 @@ namespace Muggle.AutoCADPlugins.Common.ExcelOperation {
                 throw new ArgumentNullException(nameof(range));
             }
 
-            var resault = new List<Extents2d>();
+            var result = new List<Extents2d>();
             var areas = range.Areas;
             foreach (Range area in areas) {
                 var (minX, minY, maxX, maxY) = ExcelOperation.GetMostRCNum(area);
-                resault.Add(new Extents2d(minX, minY, maxX, maxY));
+                result.Add(new Extents2d(minX, minY, maxX, maxY));
             }
 
-            return resault;
+            return result;
         }
 
         /// <summary>
