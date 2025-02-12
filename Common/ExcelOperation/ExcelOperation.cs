@@ -136,9 +136,11 @@ namespace Muggle.AutoCADPlugins.Common.ExcelOperation {
         /// </summary>
         /// <param name="range">要合并的单元格区域。
         /// 应当为单个连续区域，即 <see cref="Range.Areas"/> 返回的集合只包含一个对象。</param>
+        /// <param name="numberFormatSetToText">将单元格数字格式设置为文本，
+        /// 设置为 true 以防止数值被自动转换成意外的格式。默认值 true。</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"><paramref name="range"/> 应当是单个连续区域。</exception>
-        public static void MergeKeepContent(Range range) {
+        public static void MergeKeepContent(Range range, bool numberFormatSetToText = true) {
             if (range is null) {
                 throw new ArgumentNullException(nameof(range));
             }
@@ -149,14 +151,15 @@ namespace Muggle.AutoCADPlugins.Common.ExcelOperation {
 
             var content = string.Empty;
             foreach (Range cell in range) {
-                if (cell.Formula == string.Empty) continue;
+                if (cell.Value == null) continue;
 
-                content += cell.Formula;
-                cell.Formula = string.Empty;
+                content += cell.Value;
+                cell.ClearContents();
             }
 
             range.Merge();
-            range.Formula = content;
+            if (numberFormatSetToText) range.NumberFormat = "@";
+            range.Value = content;
         }
     }
 }

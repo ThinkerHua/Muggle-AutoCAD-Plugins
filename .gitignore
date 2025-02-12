@@ -362,3 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 *._ls
+/dotNet Plugins/DevProxy
+/dotNet Plugins/Test
+/UnitTest
+/Install DevProxy.reg
+/Uninstall DevProxy.reg
