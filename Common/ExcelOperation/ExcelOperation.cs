@@ -1,8 +1,23 @@
-﻿using System;
+﻿/*==============================================================================
+ *  Muggle AutoCAD-Plugins - tools and plugins for AutoCAD
+ *
+ *  Copyright © 2024 Huang YongXing. 
+ *
+ *  This library is free software, licensed under the terms of the GNU 
+ *  General Public License as published by the Free Software Foundation, 
+ *  either version 3 of the License, or (at your option) any later version. 
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>. 
+ *==============================================================================
+ *  ExcelOperation.cs: some operations about Excel.
+ *  written by Huang YongXing - thinkerhua@hotmail.com
+ *==============================================================================*/
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Autodesk.AutoCAD.DatabaseServices;
 using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Muggle.AutoCADPlugins.Common.ExcelOperation {
     /// <summary>
@@ -22,15 +37,19 @@ namespace Muggle.AutoCADPlugins.Common.ExcelOperation {
         /// <returns>最大行号和列号。</returns>
         /// <exception cref="ArgumentNullException"></exception>
         public static (int MaxRow, int MaxCol) GetMaxRCNum(this Worksheet sheet) {
+#if NET48_OR_GREATER
             if (sheet is null) {
                 throw new ArgumentNullException(nameof(sheet));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(nameof(sheet));
+#endif
 
             var address = sheet.Cells.Address[true, true, XlReferenceStyle.xlR1C1];
             var match = Regex.Match(address, RangeAddressPattern_RC);
             //不必判断 match.Sucess
-            int.TryParse(match.Groups["maxRow"].Value, out int maxRow);
-            int.TryParse(match.Groups["maxCol"].Value, out int maxCol);
+            _ = int.TryParse(match.Groups["maxRow"].Value, out int maxRow);
+            _ = int.TryParse(match.Groups["maxCol"].Value, out int maxCol);
 
             return (maxRow, maxCol);
         }
@@ -41,10 +60,14 @@ namespace Muggle.AutoCADPlugins.Common.ExcelOperation {
         /// <param name="range">当前单元格区域</param>
         /// <returns>当前单元格区域的最小行号、最小列号、最大行号、最大列号。</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static (int minRow, int minCol, int maxRow, int maxCol) GetMostRCNum(this Range range) {
+        public static (int minRow, int minCol, int maxRow, int maxCol) GetMostRCNum(this Excel.Range range) {
+#if NET48_OR_GREATER
             if (range is null) {
                 throw new ArgumentNullException(nameof(range));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(nameof(range));
+#endif
 
             int minRow = int.MaxValue;
             int maxRow = 1;
@@ -52,14 +75,14 @@ namespace Muggle.AutoCADPlugins.Common.ExcelOperation {
             int maxCol = 1;
 
             var areas = range.Areas;
-            foreach (Range subRange in areas) {
+            foreach (Excel.Range subRange in areas) {
                 var address = subRange.Address[true, true, XlReferenceStyle.xlR1C1];
                 var match = Regex.Match(address, RangeAddressPattern_RC);
                 //不必判断 match.Sucess
-                int.TryParse(match.Groups["minRow"].Value, out int sR);
-                int.TryParse(match.Groups["minCol"].Value, out int sC);
-                int.TryParse(match.Groups["maxRow"].Value, out int eR);
-                int.TryParse(match.Groups["maxCol"].Value, out int eC);
+                _ = int.TryParse(match.Groups["minRow"].Value, out int sR);
+                _ = int.TryParse(match.Groups["minCol"].Value, out int sC);
+                _ = int.TryParse(match.Groups["maxRow"].Value, out int eR);
+                _ = int.TryParse(match.Groups["maxCol"].Value, out int eC);
                 if (eR == 0) eR = sR;
                 if (eC == 0) eC = sC;
 
@@ -78,14 +101,18 @@ namespace Muggle.AutoCADPlugins.Common.ExcelOperation {
         /// <param name="range">单元格区域</param>
         /// <returns>边界框集合。</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static IEnumerable<Extents2d> RangeToExtents(Range range) {
+        public static IEnumerable<Extents2d> RangeToExtents(Excel.Range range) {
+#if NET48_OR_GREATER
             if (range is null) {
                 throw new ArgumentNullException(nameof(range));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(nameof(range));
+#endif
 
             var result = new List<Extents2d>();
             var areas = range.Areas;
-            foreach (Range area in areas) {
+            foreach (Excel.Range area in areas) {
                 var (minX, minY, maxX, maxY) = ExcelOperation.GetMostRCNum(area);
                 result.Add(new Extents2d(minX, minY, maxX, maxY));
             }
@@ -140,17 +167,21 @@ namespace Muggle.AutoCADPlugins.Common.ExcelOperation {
         /// 设置为 true 以防止数值被自动转换成意外的格式。默认值 true。</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"><paramref name="range"/> 应当是单个连续区域。</exception>
-        public static void MergeKeepContent(Range range, bool numberFormatSetToText = true) {
+        public static void MergeKeepContent(Excel.Range range, bool numberFormatSetToText = true) {
+#if NET48_OR_GREATER
             if (range is null) {
                 throw new ArgumentNullException(nameof(range));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(nameof(range));
+#endif
 
             if (range.Areas.Count > 1) {
                 throw new ArgumentException($"“{nameof(range)}”应当是单个连续区域。", nameof(range));
             }
 
             var content = string.Empty;
-            foreach (Range cell in range) {
+            foreach (Excel.Range cell in range) {
                 if (cell.Value == null) continue;
 
                 content += cell.Value;

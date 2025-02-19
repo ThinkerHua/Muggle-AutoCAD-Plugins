@@ -9,30 +9,24 @@
  *  You should have received a copy of the GNU General Public License 
  *  along with this program. If not, see <http://www.gnu.org/licenses/>. 
  *==============================================================================
- *  DWGFilesMerger.cs: merger for DWG files
+ *  MainWindow.xaml.cs: code behind for user interface of merger for DWG files
  *  written by Huang YongXing - thinkerhua@hotmail.com
  *==============================================================================*/
-using Autodesk.AutoCAD.Runtime;
-using Muggle.AutoCADPlugins.DWGFilesMerger.View;
+using System.ComponentModel;
+using System.Windows;
 
-[assembly: ExtensionApplication(typeof(Muggle.AutoCADPlugins.DWGFilesMerger.DWGFilesMerger))]
-[assembly: CommandClass(typeof(Muggle.AutoCADPlugins.DWGFilesMerger.DWGFilesMerger))]
-namespace Muggle.AutoCADPlugins.DWGFilesMerger {
-    public class DWGFilesMerger : IExtensionApplication {
-        private MainWindow form;
-
-        public void Initialize() {
-
+namespace Muggle.AutoCADPlugins.DWGFilesMerger.View {
+    /// <summary>
+    /// MainWindow.xaml 的交互逻辑
+    /// </summary>
+    public partial class MainWindow : Window {
+        public MainWindow() {
+            InitializeComponent();
         }
 
-        [CommandMethod("MergeDWGFiles")]
-        public void MergeDWGFiles() {
-            form ??= new MainWindow();
-            form.ShowDialog();
-        }
-
-        public void Terminate() {
-
+        protected override void OnClosing(CancelEventArgs e) {
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }

@@ -1,120 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
     <RootNamespace>Muggle.AutoCADPlugins.ExportTableToExcel</RootNamespace>
-    <AssemblyName>ExportTableToExcel</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <LangVersion Condition="'$(TargetFramework)' == 'net48'">8.0</LangVersion>
+    <LangVersion Condition="'$(TargetFramework)' == 'net8.0-windows'">12.0</LangVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <TargetName>ExprotTableToExcel</TargetName>
+    <AssemblyTitle>ExprotTableToExcel</AssemblyTitle>
+    <Description></Description>
+    <Product>Muggle AutoCAD-Plugins</Product>
+    <Authors>Huang YongXing</Authors>
+    <Copyright>Copyright © 2024 Huang YongXing. All rights reserved.</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <RootNamespace>Muggle.AutoCADPlugins.ExportTableToExcel</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="AcCoreMgd, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.Core.24.0.0\lib\net47\AcCoreMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcCui, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AcCui.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcDbMgd, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.Model.24.0.0\lib\net47\AcDbMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="acdbmgdbrep, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.Model.24.0.0\lib\net47\acdbmgdbrep.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcDx, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AcDx.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcMgd, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AcMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcMr, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AcMr.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcSeamless, Version=24.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AcSeamless.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcTcMgd, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AcTcMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcWindows, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AcWindows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AdUIMgd, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AdUIMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AdUiPalettes, Version=24.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AdUiPalettes.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AdWindows, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoCAD.NET.24.0.0\lib\net47\AdWindows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\..\Common\Common.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ExchangeTable.cs" />
-    <Compile Include="ExportTableToExcel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <PackageReference Include="AutoCAD.NET" Version="24.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+    <PackageReference Include="AutoCAD.NET" Version="25.0.1" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{52fa7302-081d-4934-bbae-8763a9b50280}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)$(TargetName).dll" "D:\Program Files\Muggle\AutoCAD-Plugins\" /Y /C /Q /R</PostBuildEvent>
-  </PropertyGroup>
 </Project>

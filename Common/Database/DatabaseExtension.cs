@@ -30,16 +30,20 @@ namespace Muggle.AutoCADPlugins.Common.Database {
         /// 若无有效实体，则集合 Count 属性等于 0。</returns>
         /// <exception cref="ArgumentNullException"></exception>
         public static Entities GetModelSpaceEntities(this Autodesk.AutoCAD.DatabaseServices.Database db) {
+#if NET48_OR_GREATER
             if (db is null) {
                 throw new ArgumentNullException(nameof(db));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(nameof(db));
+#endif
 
             var entities = new Entities();
             using (var trans = db.TransactionManager.StartTransaction()) {
                 var blockTable = trans.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
-                var modelSpace = trans.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForRead) as BlockTableRecord;
-                foreach (var objectId in modelSpace) {
-                    entities.Add(trans.GetObject(objectId, OpenMode.ForRead) as Entity);
+                var modelSpace = trans.GetObject(blockTable![BlockTableRecord.ModelSpace], OpenMode.ForRead) as BlockTableRecord;
+                foreach (var objectId in modelSpace!) {
+                    entities.Add((Entity) trans.GetObject(objectId, OpenMode.ForRead));
                 }
             }
 
@@ -54,15 +58,19 @@ namespace Muggle.AutoCADPlugins.Common.Database {
         /// 若无有效实体，则集合 Count 属性等于 0。</returns>
         /// <exception cref="ArgumentNullException"></exception>
         public static ObjectIdCollection GetModelSpaceEntityIdCollection(this Autodesk.AutoCAD.DatabaseServices.Database db) {
+#if NET48_OR_GREATER
             if (db is null) {
                 throw new ArgumentNullException(nameof(db));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(nameof(db));
+#endif
 
             var idCollection = new ObjectIdCollection();
             using (var trans = db.TransactionManager.StartTransaction()) {
                 var blockTable = trans.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
-                var modelSpace = trans.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForRead) as BlockTableRecord;
-                foreach (var objectId in modelSpace) {
+                var modelSpace = trans.GetObject(blockTable![BlockTableRecord.ModelSpace], OpenMode.ForRead) as BlockTableRecord;
+                foreach (var objectId in modelSpace!) {
                     idCollection.Add(objectId);
                 }
             }
@@ -80,13 +88,18 @@ namespace Muggle.AutoCADPlugins.Common.Database {
         /// <returns>指定块参照内包含的所有实际显示的实体。
         /// 若无有效对象，则集合 Count 属性等于 0。</returns>
         public static Entities GetEntities(this Autodesk.AutoCAD.DatabaseServices.Database db, BlockReference blockRef) {
+#if NET48_OR_GREATER
             if (db is null) {
                 throw new ArgumentNullException(nameof(db));
             }
-
             if (blockRef is null) {
                 throw new ArgumentNullException(nameof(blockRef));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(nameof(db));
+            ArgumentNullException.ThrowIfNull(nameof(blockRef));
+#endif
+
 
             var entities = new Entities();
             using (var trans = db.TransactionManager.StartTransaction()) {
@@ -111,7 +124,7 @@ namespace Muggle.AutoCADPlugins.Common.Database {
 
                 foreach (ObjectId attrId in blockRef.AttributeCollection) {
                     var attrRef = trans.GetObject(attrId, OpenMode.ForRead) as AttributeReference;
-                    if (attrRef.Invisible) continue;//跳过不可见属性
+                    if (attrRef!.Invisible) continue;//跳过不可见属性
                     if (attrRef.IsMTextAttribute) {
                         entities.Add(attrRef.MTextAttribute);//多行文字
                     } else {
@@ -133,13 +146,17 @@ namespace Muggle.AutoCADPlugins.Common.Database {
         /// 若无有效对象，则集合 Count 属性等于 0。</returns>
         /// <exception cref="ArgumentNullException"></exception>
         public static List<Line> GetLines(this Autodesk.AutoCAD.DatabaseServices.Database db, IEnumerable<Polyline> polylines) {
+#if NET48_OR_GREATER
             if (db is null) {
                 throw new ArgumentNullException(nameof(db));
             }
-
             if (polylines is null) {
                 throw new ArgumentNullException(nameof(polylines));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(nameof(db));
+            ArgumentNullException.ThrowIfNull(nameof(polylines));
+#endif
 
             var lines = new List<Line>();
             using (var trans = db.TransactionManager.StartTransaction()) {

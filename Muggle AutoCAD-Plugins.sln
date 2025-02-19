@@ -16,26 +16,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lisp Plugins", "Lisp Plugin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DWGFilesMerger", "dotNet Plugins\DWGFilesMerger\DWGFilesMerger.csproj", "{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableToExcel", "dotNet Plugins\ExportTableToExcel\ExportTableToExcel.csproj", "{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportTableToExcel", "dotNet Plugins\ExportTableToExcel\ExportTableToExcel.csproj", "{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xUnitTest", "xUnitTest\xUnitTest.csproj", "{07482D2B-ED4F-444F-BAA8-90859930840A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{52FA7302-081D-4934-BBAE-8763A9B50280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52FA7302-081D-4934-BBAE-8763A9B50280}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52FA7302-081D-4934-BBAE-8763A9B50280}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52FA7302-081D-4934-BBAE-8763A9B50280}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52FA7302-081D-4934-BBAE-8763A9B50280}.Debug|x64.ActiveCfg = Debug|x64
+		{52FA7302-081D-4934-BBAE-8763A9B50280}.Debug|x64.Build.0 = Debug|x64
+		{52FA7302-081D-4934-BBAE-8763A9B50280}.Release|x64.ActiveCfg = Release|x64
+		{52FA7302-081D-4934-BBAE-8763A9B50280}.Release|x64.Build.0 = Release|x64
+		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Debug|x64.ActiveCfg = Debug|x64
+		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Debug|x64.Build.0 = Debug|x64
+		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Release|x64.ActiveCfg = Release|x64
+		{1A14BB2A-7B74-4E36-B5CA-6A9C95EA98F5}.Release|x64.Build.0 = Release|x64
+		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Debug|x64.ActiveCfg = Debug|x64
+		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Debug|x64.Build.0 = Debug|x64
+		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Release|x64.ActiveCfg = Release|x64
+		{BBF54ABD-04CD-427E-9133-3D5E23D22ABE}.Release|x64.Build.0 = Release|x64
+		{07482D2B-ED4F-444F-BAA8-90859930840A}.Debug|x64.ActiveCfg = Debug|x64
+		{07482D2B-ED4F-444F-BAA8-90859930840A}.Debug|x64.Build.0 = Debug|x64
+		{07482D2B-ED4F-444F-BAA8-90859930840A}.Release|x64.ActiveCfg = Release|x64
+		{07482D2B-ED4F-444F-BAA8-90859930840A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

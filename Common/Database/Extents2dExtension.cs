@@ -45,9 +45,13 @@ namespace Muggle.AutoCADPlugins.Common.Database {
         /// <returns>一系列边界框的共同边界框。</returns>
         /// <exception cref="ArgumentNullException"></exception>
         public static Extents2d GetExtents(IEnumerable<Extents2d> extents) {
+#if NET48_OR_GREATER
             if (extents is null) {
                 throw new ArgumentNullException(nameof(extents));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(extents);
+#endif
 
             var minPointX = double.MaxValue;
             var minPointY = double.MaxValue;
@@ -191,6 +195,7 @@ namespace Muggle.AutoCADPlugins.Common.Database {
         /// <paramref name="extsCollection1"/> 或 <paramref name="extsCollection2"/>
         /// 不应为空集合。</exception>
         public static IEnumerable<Extents2d> GetIntersection(IEnumerable<Extents2d> extsCollection1, IEnumerable<Extents2d> extsCollection2) {
+#if NET48_OR_GREATER
             if (extsCollection1 is null) {
                 throw new ArgumentNullException(nameof(extsCollection1));
             }
@@ -198,12 +203,16 @@ namespace Muggle.AutoCADPlugins.Common.Database {
             if (extsCollection2 is null) {
                 throw new ArgumentNullException(nameof(extsCollection2));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(extsCollection1);
+            ArgumentNullException.ThrowIfNull(extsCollection2);
+#endif
 
-            if (extsCollection1.Count() == 0) {
+            if (!extsCollection1.Any()) {
                 throw new ArgumentException($"“{nameof(extsCollection1)}”不应为空集合。", nameof(extsCollection1));
             }
 
-            if (extsCollection2.Count() == 0) {
+            if (!extsCollection2.Any()) {
                 throw new ArgumentException($"“{nameof(extsCollection2)}”不应为空集合。", nameof(extsCollection2));
             }
 
@@ -233,6 +242,7 @@ namespace Muggle.AutoCADPlugins.Common.Database {
         /// <paramref name="extsCollection1"/> 或 <paramref name="extsCollection2"/>
         /// 不应为空集合。</exception>
         public static IEnumerable<Extents2d> GetDifference(IEnumerable<Extents2d> extsCollection1, IEnumerable<Extents2d> extsCollection2) {
+#if NET48_OR_GREATER
             if (extsCollection1 is null) {
                 throw new ArgumentNullException(nameof(extsCollection1));
             }
@@ -240,12 +250,16 @@ namespace Muggle.AutoCADPlugins.Common.Database {
             if (extsCollection2 is null) {
                 throw new ArgumentNullException(nameof(extsCollection2));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(extsCollection1);
+            ArgumentNullException.ThrowIfNull(extsCollection2);
+#endif
 
-            if (extsCollection1.Count() == 0) {
+            if (!extsCollection1.Any()) {
                 throw new ArgumentException($"“{nameof(extsCollection1)}”不应为空集合。", nameof(extsCollection1));
             }
 
-            if (extsCollection2.Count() == 0) {
+            if (!extsCollection2.Any()) {
                 throw new ArgumentException($"“{nameof(extsCollection2)}”不应为空集合。", nameof(extsCollection2));
             }
 
@@ -258,7 +272,7 @@ namespace Muggle.AutoCADPlugins.Common.Database {
                 foreach (var exts1 in result) {
                     foreach (var exts2 in extsCollection2) {
                         var difference = exts1.Subtract(exts2);
-                        if (difference.Count() == 0 || !exts1.IsEqualTo(difference.First(), toler))
+                        if (!difference.Any() || !exts1.IsEqualTo(difference.First(), toler))
                             stillHasIntersection = true;
 
                         tmp.AddRange(difference);
@@ -288,6 +302,7 @@ namespace Muggle.AutoCADPlugins.Common.Database {
         /// <paramref name="extsCollection1"/> 或 <paramref name="extsCollection2"/>
         /// 不应为空集合。</exception>
         public static IEnumerable<Extents2d> GetUnion(IEnumerable<Extents2d> extsCollection1, IEnumerable<Extents2d> extsCollection2) {
+#if NET48_OR_GREATER
             if (extsCollection1 is null) {
                 throw new ArgumentNullException(nameof(extsCollection1));
             }
@@ -295,12 +310,16 @@ namespace Muggle.AutoCADPlugins.Common.Database {
             if (extsCollection2 is null) {
                 throw new ArgumentNullException(nameof(extsCollection2));
             }
+#elif NET8_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(extsCollection1);
+            ArgumentNullException.ThrowIfNull(extsCollection2);
+#endif
 
-            if (extsCollection1.Count() == 0) {
+            if (!extsCollection1.Any()) {
                 throw new ArgumentException($"“{nameof(extsCollection1)}”不应为空集合。", nameof(extsCollection1));
             }
 
-            if (extsCollection2.Count() == 0) {
+            if (!extsCollection2.Any()) {
                 throw new ArgumentException($"“{nameof(extsCollection2)}”不应为空集合。", nameof(extsCollection2));
             }
 
